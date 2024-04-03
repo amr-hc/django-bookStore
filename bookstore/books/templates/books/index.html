@@ -1,0 +1,74 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+  {% block body %}
+<a href="{% url 'insertBook' %}" class="btn btn-primary btn-lg btn-block w-100">Add new Book</a>
+
+<main>
+    <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative;">
+        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+
+{% for book in books %}
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{book.image_url}}" class="card-img-top" alt="...">
+<!--                    <img src="{% static 'books/images/'|add:book.image %}" class="card-img-top" alt="...">-->
+
+                    <div class="card-body">
+                        <div class="clearfix mb-3">
+                          <span class="float-start badge  bg-primary">{{book.author}}</span>
+                            <span class="float-end price-hp">{{book.price}}LE</span>
+                        </div>
+
+                        <h3 class="card-title">title: {{book.title}}</h3>
+                        <div class="text-center my-4">
+                            <a href="{{book.book_url}}" class="btn btn-warning">Details</a>
+
+                            <a  class="btn btn-danger" data-id="{{book.id}}" onclick="sendIdmodel({{book.id}})" data-bs-toggle="modal" data-bs-target="#updateModal">Delete</a>
+
+                             <a href="{{book.update_url}}" class="btn btn-primary">update</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+ {% endfor %}
+
+     <div class="modal fade" id="updateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="updateModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="updateModalLabel">Are You Sure Want Delete?</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="updateform" class="row g-3 needs-validation" novalidate>
+
+              <div class="col-12 text-center">
+                <a class="btn btn-primary" id="yesid" type="submit">Yes</a>
+                <button type="reset" class="btn btn-danger offset-1" data-bs-dismiss="modal">No</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+        </div>
+    </div>
+</main>
+
+
+<script>
+function sendIdmodel(id){
+    document.getElementById("yesid").href=`/books/delete/${id}`
+}
+
+</script>
+
+  {% endblock %}

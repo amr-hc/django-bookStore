@@ -1,0 +1,35 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+  {% block body %}
+
+<main>
+    <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative;">
+        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{book.image_url}}" class="card-img-top" alt="...">
+<!--                      <img src="{% static 'books/images/'|add:book.image %}" class="card-img-top" alt="...">-->
+                    <div class="card-body">
+                        <div class="clearfix mb-3">
+                          <span class="float-start badge  bg-primary">{{book.author}}</span>
+                            <span class="float-end price-hp">{{book.price}} LE</span>
+                        </div>
+
+                        <h3 class="card-title">title: {{book.title}}</h3>
+                        <h3 class="card-title">pages: {{book.numberOfPages}}</h3>
+                        <div class="text-center my-4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</main>
+
+
+
+
+  {% endblock %}
