@@ -1,5 +1,9 @@
 from django.db import models
 from django.shortcuts import reverse
+
+from categories.models import Category
+
+
 # Create your models here.
 
 
@@ -12,6 +16,7 @@ class Book(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     # image = models.CharField(max_length=200)
     image = models.ImageField(upload_to='books/images')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

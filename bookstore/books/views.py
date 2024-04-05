@@ -5,6 +5,8 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 # Create your views here.
 from books.models import Book
 
+from books.forms import BookForm
+
 def first(request):
     return HttpResponse("hi")
 
@@ -45,24 +47,40 @@ def booksdetailsDB(request,id):
 
 
 
+# def insertBook(request):
+#     print(request)
+#     if request.method == "POST":
+#         print(request.FILES)
+#         if request.FILES:
+#             image = request.FILES["image"]
+#         else:
+#             image = None
+#         print(request.POST)
+#         book = Book(title=request.POST["title"], author=request.POST["author"],
+#                           price=request.POST["price"],numberOfPages=request.POST["numberofpages"], image=image)
+#         book.save()
+#         return redirect(book.book_url)
+#         # return HttpResponse("Post request received")
+#     # post request
+#
+#     # get request
+#     return render(request, "books/insertBook.html")
+
+
+
+
+
 def insertBook(request):
-    print(request)
+    form = BookForm()
     if request.method == "POST":
-        print(request.FILES)
-        if request.FILES:
-            image = request.FILES["image"]
-        else:
-            image = None
-        print(request.POST)
-        book = Book(title=request.POST["title"], author=request.POST["author"],
-                          price=request.POST["price"],numberOfPages=request.POST["numberofpages"], image=image)
-        book.save()
+        form=BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            book = form.save()
         return redirect(book.book_url)
-        # return HttpResponse("Post request received")
     # post request
 
     # get request
-    return render(request, "books/insertBook.html")
+    return render(request, "books/insertBook.html",{"form":form})
 
 def deleteBook(request,id):
     book = get_object_or_404(Book, pk=id)
